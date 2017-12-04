@@ -7,6 +7,10 @@ public class Axe extends Item {
 	static int DAMAGE = 2;
 	static int WEIGHT = 2;
 	
+	@Override
+public	String getName() {
+		return NAME;
+	}
 
 }
 

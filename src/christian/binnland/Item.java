@@ -1,13 +1,15 @@
 package christian.binnland;
 
-class Item {
+public class Item {
 	
 	enum Types {
 		WEAPON,
 		FOOD,
-		CLOTHING
+		CLOTHING, VEHICLE
 	}
 	
-	public  String NAME = "item";
+	public String getName() {
+		return "default_name";
+	};
 	
 }

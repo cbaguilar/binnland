@@ -3,27 +3,38 @@ package christian.binnland;
 import java.util.List;
 
 import java.util.Scanner;
+
+import christian.binnland.locations.*;
 class Game {
   
   static Scanner sn = new Scanner(System.in);
   
 	public static void main(String[] args) {
+		Player player = new Player("Binns",100);
+		IO io = new IO(player);
+		
 		println("Welcome to binland");
 		Axe a = new Axe();
 		println(a.INFO);
 		println(a.TYPE);
 		
-		Location bta = new Location("Binnesota",4);
-		bta.addItem(a);
-		bta.addItem(new Axe());
-		while (bta.getCompleted() == false){
-		  println(bta.runCommand(inputCommand()));
+		player.goTo(new Binnesota("Binnesota",4));
+		
+		while (false == false){
+		 println(io.runCommand(inputCommand()));
 		}	
+	}
+	
+	private void intro() {
+		println("/t/tBINLAND");
+		println("Wake up");
 	}
 	
 	public static String[] inputCommand(){
 	  return sn.nextLine().split(" ");
 	}
+	
+	
 	
 	static void println(Object e) {
 		System.out.println(e);
