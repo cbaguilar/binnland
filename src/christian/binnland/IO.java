@@ -2,11 +2,15 @@ package christian.binnland;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import christian.binnland.locations.Location;
 
 public class IO {
 
+	Scanner sn;
+	Player player;
+	
 	String[] ACTS = new String[] {
 			  "inspect"
 			};
@@ -15,15 +19,21 @@ public class IO {
 			};
 	
 	public IO() {
-		// TODO Auto-generated constructor stub
+		sn = new Scanner(System.in);
 	}
 	
-	Player player;
-
 	public IO(Player player) {
 		this.player = player;
 	}
 
+	public String[] inputCommand(){
+		  return sn.nextLine().split(" ");
+		}	
+		
+	void println(Object e) {
+			System.out.println(e);
+		}
+	
 	public String runCommand(String[] cmd) {
 		  boolean validCmd = false;
 		  

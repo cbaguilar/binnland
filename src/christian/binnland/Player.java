@@ -3,6 +3,7 @@ package christian.binnland;
 import java.util.ArrayList;
 import java.util.List;
 
+import christian.binnland.items.Item;
 import christian.binnland.locations.Location;
 
 public class Player {

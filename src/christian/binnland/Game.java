@@ -4,6 +4,7 @@ import java.util.List;
 
 import java.util.Scanner;
 
+import christian.binnland.items.Axe;
 import christian.binnland.locations.*;
 class Game {
   
@@ -18,7 +19,7 @@ class Game {
 		println(a.INFO);
 		println(a.TYPE);
 		
-		player.goTo(new Binnesota("Binnesota",4));
+		player.goTo(new Binnesota("Binnesota",io));
 		
 		while (false == false){
 		 println(io.runCommand(inputCommand()));

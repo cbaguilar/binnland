@@ -2,7 +2,8 @@ package christian.binnland.locations;
 
 import java.util.List;
 
-import christian.binnland.Item;
+import christian.binnland.IO;
+import christian.binnland.items.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +12,9 @@ public class Location {
 	
 	
 	
-	List<Item> items = new ArrayList();
+	List<Item> items = new ArrayList<Item>();
 	
-	public Location(String name, int time){
+	public Location(String name, IO io){
 		System.out.println("Entering " + name );
 		//items = new List();
 		

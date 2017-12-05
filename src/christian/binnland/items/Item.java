@@ -1,4 +1,4 @@
-package christian.binnland;
+package christian.binnland.items;
 
 public class Item {
 	

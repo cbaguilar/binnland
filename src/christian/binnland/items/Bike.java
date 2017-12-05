@@ -1,6 +1,6 @@
-package christian.binnland;
+package christian.binnland.items;
 
-import christian.binnland.Item.Types;
+import christian.binnland.items.Item.Types;
 
 public class Bike extends Item {
 
@@ -14,4 +14,10 @@ public class Bike extends Item {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public	String getName() {
+		return NAME;
+	}
+
+	
 }
