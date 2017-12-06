@@ -33,6 +33,11 @@ public class Location {
 	public boolean getCompleted(){
 	  return false;
 	}
+
+	public String attackObstacle() {
+		// TODO Auto-generated method stub
+		return "Nothing to attack..";
+	}
 }
 	
 

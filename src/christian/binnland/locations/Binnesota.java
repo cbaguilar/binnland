@@ -5,6 +5,7 @@ import java.util.List;
 
 import christian.binnland.IO;
 import christian.binnland.items.*;
+import christian.binnland.obstacles.*;
 
 public class Binnesota extends Location {
 
@@ -14,12 +15,15 @@ public class Binnesota extends Location {
 	
 	int level = 0;
 	
+	Obstacle curObst;
 	
 	
 	public Binnesota(String name, IO output) {
 		super(name,output);
 		this.addItem(new Axe());
 		this.addItem(new Bike());
+		curObst = new Ice();
+		
 		
 	}
 	
@@ -37,6 +41,12 @@ public class Binnesota extends Location {
 			
 		}
 		return new Object();
+	}
+	
+	public String[] attackObstacle(int damage) {
+		return   curObst.attack(damage);
+		
+		
 	}
 	
 

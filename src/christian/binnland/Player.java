@@ -46,5 +46,9 @@ public class Player {
 	public void goTo(Location l) {
 		curLocation = l;
 	}
+
+	public String attack() {
+		return getLocation().attackObstacle();
+	}
 	
 }

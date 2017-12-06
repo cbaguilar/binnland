@@ -2,6 +2,8 @@ package christian.binnland;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import christian.binnland.locations.Location;
@@ -11,19 +13,27 @@ public class IO {
 	Scanner sn;
 	Player player;
 	
-	String[] ACTS = new String[] {
-			  "inspect"
-			};
-			String[] MODIFIERS = new String[] {
-			  "north","south","east","west","up","down"
-			};
 	
-	public IO() {
-		sn = new Scanner(System.in);
-	}
 	
+
+			
+	Map<String,Integer> ACTS;
+	
+
 	public IO(Player player) {
+		sn = new Scanner(System.in);
 		this.player = player;
+		
+		 ACTS = new HashMap<String,Integer>();
+			
+			System.out.println("nothign");
+			ACTS.put("inspect",0);
+			ACTS.put("look",0);
+			
+			ACTS.put("fight", 1);
+			ACTS.put("break", 1);
+			ACTS.put("hit", 1);
+			ACTS.put("smash",1);
 	}
 
 	public String[] inputCommand(){
@@ -41,15 +51,18 @@ public class IO {
 		  
 		  for (String word : cmd){
 		  
-		  if (Arrays.asList(ACTS).contains(word.toLowerCase())) {
+		  if (ACTS.containsKey(word.toLowerCase())) {
 		    validCmd = true;
+		    primaryCmd = ACTS.get(word.toLowerCase());
 		    break;
 		  }
-		  primaryCmd++;
+		 
 		  }
 		  if (validCmd){
 		    switch(primaryCmd){
 		      case 0: return player.inspect(player.getLocation());
+		      case 1: return player.attack();
+		      
 		    }
 		  }
 		  else {
