@@ -29,18 +29,20 @@ public class IO {
 			System.out.println("nothign");
 			ACTS.put("inspect",0);
 			ACTS.put("look",0);
+			ACTS.put("check", 0);
 			
 			ACTS.put("fight", 1);
 			ACTS.put("break", 1);
 			ACTS.put("hit", 1);
 			ACTS.put("smash",1);
+			ACTS.put("punch", 1);
 	}
 
 	public String[] inputCommand(){
 		  return sn.nextLine().split(" ");
 		}	
 		
-	void println(Object e) {
+	public void println(Object e) {
 			System.out.println(e);
 		}
 	

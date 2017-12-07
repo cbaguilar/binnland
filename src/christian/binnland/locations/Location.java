@@ -3,6 +3,7 @@ package christian.binnland.locations;
 import java.util.List;
 
 import christian.binnland.IO;
+import christian.binnland.Response;
 import christian.binnland.items.Item;
 
 import java.util.ArrayList;
@@ -33,10 +34,10 @@ public class Location {
 	public boolean getCompleted(){
 	  return false;
 	}
-
-	public String attackObstacle() {
+	
+	public Response attackObstacle(int damage) {
 		// TODO Auto-generated method stub
-		return "Nothing to attack..";
+		return new Response("Nothing to attack...",0);
 	}
 }
 	

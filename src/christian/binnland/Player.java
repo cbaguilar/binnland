@@ -1,6 +1,7 @@
 package christian.binnland;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import christian.binnland.items.Item;
@@ -8,6 +9,8 @@ import christian.binnland.locations.Location;
 
 public class Player {
 
+	
+	ArrayList<String> vowels;
 	
 	List<Item> inventory;
 	int health = 100;
@@ -18,6 +21,9 @@ public class Player {
 	Player(String name, int health){
 		inventory = new ArrayList<Item>();
 		this.health = 100;
+	
+		vowels = (ArrayList<String>) Arrays.asList(new String[] {"a","e","i","o","u"});
+	
 	}
 	
 	public List<Item> getInven(){
@@ -29,9 +35,12 @@ public class Player {
 	}
 	
 	String inspect(Location l){
-		  String response = "You look around \n"+
-				  			"You see: ";
 		  List<Item> items = l.getItems();
+		  
+		  
+		  String response = "You look around. \n"+
+				  			"You see: ";
+		
 		  for (Item i : items) {
 			  response += (" a "+ i.getName()+"\n");
 		  }
@@ -46,9 +55,24 @@ public class Player {
 	public void goTo(Location l) {
 		curLocation = l;
 	}
+	
+	public void isVowel(String s) {
+		
+	}
+	
 
+	
 	public String attack() {
-		return getLocation().attackObstacle();
+		Response resp = getLocation().attackObstacle(1);
+		
+		if (resp.VALUE > 0) { takeDamage(resp.VALUE); }
+		
+		return resp.RESPONSE;
+	}
+
+	private void takeDamage(int dam) {
+		this.health-=dam;
+		
 	}
 	
 }

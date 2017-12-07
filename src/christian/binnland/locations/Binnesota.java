@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import christian.binnland.IO;
+import christian.binnland.Response;
 import christian.binnland.items.*;
 import christian.binnland.obstacles.*;
 
@@ -18,11 +19,14 @@ public class Binnesota extends Location {
 	Obstacle curObst;
 	
 	
-	public Binnesota(String name, IO output) {
-		super(name,output);
+	public Binnesota(String name, IO io) {
+		super(name,io);
 		this.addItem(new Axe());
 		this.addItem(new Bike());
 		curObst = new Ice();
+		io.println("You wake in cold water, under a sheet of ice...");
+		io.println("You should probably try breaking out of the ice before you drown!");
+		
 		
 		
 	}
@@ -43,9 +47,17 @@ public class Binnesota extends Location {
 		return new Object();
 	}
 	
-	public String[] attackObstacle(int damage) {
-		return   curObst.attack(damage);
+	@Override
+	public Response attackObstacle(int damage) {
 		
+		switch(level) {
+		case 0:
+			level++;
+			return  curObst.attack(damage);
+		
+		
+		}
+		return new Response("Nothing to fight", 0);
 		
 	}
 	

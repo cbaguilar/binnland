@@ -1,5 +1,7 @@
 package christian.binnland.obstacles;
 
+import christian.binnland.Response;
+
 public class Ice extends Obstacle {
 
 	
@@ -16,8 +18,8 @@ public class Ice extends Obstacle {
 
 
 	@Override
-	public String[] attack(int damage) {
-		return "The cold ice shatters";
+	public Response attack(int damage) {
+		return new Response("You emerged from the ice!\n Try looking around to see what you have to your disposal...",0);
 	}
 
 
