@@ -22,7 +22,7 @@ public class Player {
 		inventory = new ArrayList<Item>();
 		this.health = 100;
 	
-		vowels = (ArrayList<String>) Arrays.asList(new String[] {"a","e","i","o","u"});
+		//vowels = (ArrayList<String>) Arrays.asList(new String[] {"a","e","i","o","u"});
 	
 	}
 	
@@ -45,6 +45,7 @@ public class Player {
 			  response += (" a "+ i.getName()+"\n");
 		  }
 		  
+		  response+= l.getDesc();
 		  return response;
 		}
 

@@ -26,7 +26,7 @@ public class IO {
 		
 		 ACTS = new HashMap<String,Integer>();
 			
-			System.out.println("nothign");
+
 			ACTS.put("inspect",0);
 			ACTS.put("look",0);
 			ACTS.put("check", 0);

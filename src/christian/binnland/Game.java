@@ -14,10 +14,10 @@ class Game {
 		Player player = new Player("Binns",100);
 		IO io = new IO(player);
 		
-		println("Welcome to binland");
+		println("You hear but you do not see yet.");
+		println("Say something!");
+		inputCommand();
 		Axe a = new Axe();
-		println(a.INFO);
-		println(a.TYPE);
 		
 		player.goTo(new Binnesota("Binnesota",io));
 		

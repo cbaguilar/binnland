@@ -2,6 +2,7 @@ package christian.binnland.locations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import christian.binnland.IO;
 import christian.binnland.Response;
@@ -19,6 +20,7 @@ public class Binnesota extends Location {
 	Obstacle curObst;
 	
 	
+
 	public Binnesota(String name, IO io) {
 		super(name,io);
 		this.addItem(new Axe());
@@ -27,6 +29,12 @@ public class Binnesota extends Location {
 		io.println("You wake in cold water, under a sheet of ice...");
 		io.println("You should probably try breaking out of the ice before you drown!");
 		
+		this.descs.put(0, "It is cold and wet");
+		this.descs.put(1, "It is cold. You see a cabin in the distance");
+		
+		this.targets.put("cabin", 1);
+		this.targets.put("house", 1);
+		//TODO: add locations and items.
 		
 		
 	}
@@ -37,6 +45,19 @@ public class Binnesota extends Location {
 
 	public boolean getCompleted(){
 		  return false;
+	}
+	
+	public String getDesc() {
+		return descs.get(level);
+		
+	}
+	
+
+	public Response move() {
+		//TODO: complete move actions
+		
+		return new Response("Hay",1);
+		
 	}
 	
 	public Object tryAction() {
