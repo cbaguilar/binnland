@@ -1,5 +1,6 @@
 package christian.binnland;
 
+import java.util.Arrays;
 import java.util.List;
 
 import java.util.Scanner;
@@ -31,8 +32,8 @@ class Game {
 		println("Wake up");
 	}
 	
-	public static String[] inputCommand(){
-	  return sn.nextLine().split(" ");
+	public static List<String> inputCommand(){
+	  return Arrays.asList(sn.nextLine().split(" "));
 	}
 	
 	

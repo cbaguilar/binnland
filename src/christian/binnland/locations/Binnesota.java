@@ -15,8 +15,6 @@ public class Binnesota extends Location {
 	
 	String NAME = "Binnesota";
 	
-	int level = 0;
-	
 	Obstacle curObst;
 	
 	
@@ -24,7 +22,7 @@ public class Binnesota extends Location {
 	public Binnesota(String name, IO io) {
 		super(name,io);
 		this.addItem(new Axe());
-		this.addItem(new Bike());
+		this.level = 0;
 		curObst = new Ice();
 		io.println("You wake in cold water, under a sheet of ice...");
 		io.println("You should probably try breaking out of the ice before you drown!");
@@ -35,8 +33,6 @@ public class Binnesota extends Location {
 		this.targets.put("cabin", 1);
 		this.targets.put("house", 1);
 		//TODO: add locations and items.
-		
-		
 	}
 	
 	public String getName() {
@@ -48,20 +44,15 @@ public class Binnesota extends Location {
 	}
 	
 	public String getDesc() {
-		return descs.get(level);
+		return descs.get(this.level);
 		
 	}
 	
 
-	public Response move() {
-		//TODO: complete move actions
-		
-		return new Response("Hay",1);
-		
-	}
+
 	
 	public Object tryAction() {
-		switch (level) {
+		switch (this.level) {
 		case 0:
 			
 		}
@@ -71,7 +62,7 @@ public class Binnesota extends Location {
 	@Override
 	public Response attackObstacle(int damage) {
 		
-		switch(level) {
+		switch(this.level) {
 		case 0:
 			level++;
 			return  curObst.attack(damage);

@@ -18,6 +18,7 @@ public class Location {
 	List<Item> items = new ArrayList<Item>();
 	Map<Integer,String> descs = new HashMap<Integer,String>();
 	Map<String,Integer> targets = new HashMap<String,Integer>();
+	int level;
 	
 	
 	public Location(String name, IO io){
@@ -48,6 +49,41 @@ public class Location {
 	public Response attackObstacle(int damage) {
 		// TODO Auto-generated method stub
 		return new Response("Nothing to attack...",0);
+	}
+
+	public Item takeItem(String itemName) throws Exception{
+		
+		try {
+			int index = getItemIndex(itemName);
+			Item i = items.get(index);
+			items.remove(index);
+			return i;
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	public int getItemIndex(String string) throws Exception{
+		for (Item i : items) {
+			System.out.println(i.getName());
+			if (i.getName().toLowerCase().equals(string)) {
+				return items.indexOf(i);
+			}
+		}
+		throw new Exception();
+	}
+	
+	public Response move(String target) {
+		if (targets.containsKey(target)) {
+			level = targets.get(target);
+			return new Response("Moved to "+target,1);
+		}
+		else {
+			return new Response("Could not find "+target,0);
+		}
+	
+		
 	}
 }
 	

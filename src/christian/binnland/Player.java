@@ -1,7 +1,6 @@
 package christian.binnland;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import christian.binnland.items.Item;
@@ -57,6 +56,10 @@ public class Player {
 		curLocation = l;
 	}
 	
+	public String move(String s) {
+		return curLocation.move(s).RESPONSE;
+	}
+	
 	public void isVowel(String s) {
 		
 	}
@@ -74,6 +77,19 @@ public class Player {
 	private void takeDamage(int dam) {
 		this.health-=dam;
 		
+	}
+
+	public String pickUp(List<String> cleanCmd) {
+		Item i;
+		String itemName = cleanCmd.get(1);
+		try {
+		i = curLocation.takeItem(itemName);
+		this.addItem(i);
+		return "Picked up " + i.getName();
+		}
+		catch (Exception e) {
+			return "Couldn't find " +itemName;
+		}
 	}
 	
 }
