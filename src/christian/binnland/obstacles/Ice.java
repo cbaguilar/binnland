@@ -25,4 +25,11 @@ public class Ice extends Item implements Fightable {
 	}
 
 
+	@Override
+	public int getHealth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 }

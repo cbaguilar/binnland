@@ -42,6 +42,11 @@ public class Door extends Item implements Fightable {
 			return new Response("The door is locked",0);
 		}
 	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
 	public Response attack(int damage) {
 		if (damage < WEIGHT) {
 			return new Response("Your weak efforts do little to the heavy door. \nThe weight of the door hurts you.",1);

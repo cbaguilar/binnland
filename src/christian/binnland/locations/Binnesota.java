@@ -15,6 +15,8 @@ public class Binnesota extends Location {
 	List<Item> cabinItems = new ArrayList<Item>();
 	List<Item> insideItems = new ArrayList<Item>();
 	List<Item> closetItems = new ArrayList<Item>();
+	
+	boolean completed = false;
 
 	public Binnesota(String name, IO io) {
 		super(name, io);
@@ -73,7 +75,7 @@ public class Binnesota extends Location {
 	}
 
 	public boolean getCompleted() {
-		return false;
+		return completed;
 	}
 
 	public String getDesc() {
@@ -173,7 +175,15 @@ public class Binnesota extends Location {
 		case 2:
 			return getCurObst().attack(damage);
 		case 4:
+			if (getCurObst().getHealth() > 1) {
+				
+				this.completed = true;
+				return getCurObst().attack(damage);
+				
+				
+			}
 			return getCurObst().attack(damage);
+			
 		
 		}
 		return new Response("Nothing to fight", 0);
