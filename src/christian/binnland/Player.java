@@ -2,7 +2,9 @@ package christian.binnland;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import christian.binnland.items.Door;
 import christian.binnland.items.Item;
 import christian.binnland.locations.Location;
 
@@ -16,12 +18,12 @@ public class Player {
 	
 	Location curLocation;
 	
-	
+	Item equipped;
 	Player(String name, int health){
 		inventory = new ArrayList<Item>();
 		this.health = 100;
 	
-		//vowels = (ArrayList<String>) Arrays.asList(new String[] {"a","e","i","o","u"});
+		//
 	
 	}
 	
@@ -39,8 +41,7 @@ public class Player {
 		  
 		  String response = "You look around. \n"+
 				  			"You see: ";
-		
-		  for (Item i : items) {
+		  for (Item i : l.getItems()) {
 			  response += (" a "+ i.getName()+"\n");
 		  }
 		  
@@ -60,20 +61,32 @@ public class Player {
 		return curLocation.move(s).RESPONSE;
 	}
 	
-	public void isVowel(String s) {
-		
-	}
+
 	
 
 	
 	public String attack() {
-		Response resp = getLocation().attackObstacle(1);
+		String attackMod = "Hand";
+		int damage = 1;
+		if (!(equipped==(null))) {
+			damage=equipped.DAMAGE;
+			attackMod = equipped.getName();
+		}
+		Response resp = getLocation().attackObstacle(damage);
 		
 		if (resp.VALUE > 0) { takeDamage(resp.VALUE); }
 		
-		return resp.RESPONSE;
+		return "You attacked with your "+ attackMod+"\n"+resp.RESPONSE;
 	}
 
+	public String stats() {
+		int pwr = 1;
+		if (!(equipped==null)) {
+			pwr = equipped.DAMAGE;
+		}
+		return "Your attack power: "+pwr;
+	}
+	
 	private void takeDamage(int dam) {
 		this.health-=dam;
 		
@@ -90,6 +103,43 @@ public class Player {
 		catch (Exception e) {
 			return "Couldn't find " +itemName;
 		}
+	}
+	
+	public String equipItem(String name) {
+		try {
+			equipped = getItemByIndex(name);
+			return "Equipped "+name;
+		}
+		catch (NoSuchElementException nsee) {
+			return "Couldn't find " + name + " in your inventory.";
+		}
+	}
+
+	public Item getItemByIndex(String name) throws NoSuchElementException {
+		int index = getItemIndex(name);
+		return getInven().get(index);
+	}
+	
+	public int getItemIndex(String string) throws NoSuchElementException{
+		for (Item i : getInven()) {
+			//System.out.println(i.getName());
+			if (i.getName().toLowerCase().equals(string.toLowerCase())) {
+				return getInven().indexOf(i);
+			}
+		}
+		throw new NoSuchElementException();
+	}
+	
+	public String openDoor() {
+		try {
+			Door door = (Door)curLocation.getItemByIndex("door");
+			Response resp = door.open();
+			return resp.RESPONSE;
+		}
+		catch (NoSuchElementException enfe) {
+			return "Could not find a door";
+		}
+	
 	}
 	
 }

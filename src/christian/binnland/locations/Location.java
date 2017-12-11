@@ -2,9 +2,11 @@ package christian.binnland.locations;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import christian.binnland.IO;
 import christian.binnland.Response;
+import christian.binnland.items.Fightable;
 import christian.binnland.items.Item;
 
 import java.util.ArrayList;
@@ -14,11 +16,15 @@ import java.util.HashMap;
 public class Location {
 	
 	
-	
+	Map<Integer,Fightable> obsts= new HashMap<Integer,Fightable>();
 	List<Item> items = new ArrayList<Item>();
 	Map<Integer,String> descs = new HashMap<Integer,String>();
 	Map<String,Integer> targets = new HashMap<String,Integer>();
 	int level;
+	
+
+	Map<Integer,List<Item>> lItems = new HashMap<Integer,List<Item>>();
+
 	
 	
 	public Location(String name, IO io){
@@ -27,12 +33,32 @@ public class Location {
 		
 	}
 	
+	public Fightable getCurObst() throws NoSuchElementException{
+		return obsts.get(level);
+	}
 	public void addItem(Item i) {
-		this.items.add(i);
+		try {
+		  getItems().add(i);
+		}
+		catch (NullPointerException npe) {
+			lItems.put(level,new ArrayList<Item>());
+			getItems().add(i);
+		}
 	}
 	
 	public List<Item> getItems(){
-		return items;
+		List<Item> retValue;
+		try {
+			retValue = lItems.get(level);
+			if (retValue.equals(null)) {
+				lItems.put(level, new ArrayList<Item>());
+			}
+			return retValue;
+		}
+		catch (NullPointerException npe) {
+			lItems.put(level,new ArrayList<Item>());
+			return lItems.get(level);
+		}
 	}
 	
 	public String getDesc() {
@@ -55,23 +81,33 @@ public class Location {
 		
 		try {
 			int index = getItemIndex(itemName);
-			Item i = items.get(index);
-			items.remove(index);
+			Item i = getItems().get(index);
+			if (i.grabable) {
+			getItems().remove(index);
 			return i;
+			}
+			else {
+				throw new Exception();
+			}
 		}
 		catch (Exception e) {
 			throw e;
 		}
 	}
 	
-	public int getItemIndex(String string) throws Exception{
-		for (Item i : items) {
-			System.out.println(i.getName());
-			if (i.getName().toLowerCase().equals(string)) {
-				return items.indexOf(i);
+	public Item getItemByIndex(String name) throws NoSuchElementException {
+		int index = getItemIndex(name);
+		return getItems().get(index);
+	}
+	
+	public int getItemIndex(String string) throws NoSuchElementException{
+		for (Item i : getItems()) {
+			//System.out.println(i.getName());
+			if (i.getName().toLowerCase().equals(string.toLowerCase())) {
+				return getItems().indexOf(i);
 			}
 		}
-		throw new Exception();
+		throw new NoSuchElementException();
 	}
 	
 	public Response move(String target) {

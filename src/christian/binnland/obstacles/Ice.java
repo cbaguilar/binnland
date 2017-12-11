@@ -1,8 +1,10 @@
 package christian.binnland.obstacles;
 
 import christian.binnland.Response;
+import christian.binnland.items.Fightable;
+import christian.binnland.items.Item;
 
-public class Ice extends Obstacle {
+public class Ice extends Item implements Fightable {
 
 	
 	private final String NAME ="LAKE ICE";

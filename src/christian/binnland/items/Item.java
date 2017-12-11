@@ -5,8 +5,11 @@ public class Item {
 	enum Types {
 		WEAPON,
 		FOOD,
-		CLOTHING, VEHICLE
+		CLOTHING, VEHICLE, OBSTACLE
 	}
+	
+	public boolean grabable = true;
+	public int DAMAGE;
 	
 	public String getName() {
 		return "default_name";
