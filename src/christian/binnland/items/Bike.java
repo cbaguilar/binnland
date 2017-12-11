@@ -1,6 +1,5 @@
 package christian.binnland.items;
 
-import christian.binnland.items.Item.Types;
 
 public class Bike extends Item {
 

@@ -1,9 +1,7 @@
 package christian.binnland.locations;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import christian.binnland.IO;
 import christian.binnland.Response;
@@ -16,6 +14,7 @@ public class Binnesota extends Location {
 
 	List<Item> cabinItems = new ArrayList<Item>();
 	List<Item> insideItems = new ArrayList<Item>();
+	List<Item> closetItems = new ArrayList<Item>();
 
 	public Binnesota(String name, IO io) {
 		super(name, io);
@@ -23,9 +22,14 @@ public class Binnesota extends Location {
 		this.level = 0;
 		
 		Door cabinDoor = new Door(4,true,true,false);
+		Door closetDoor = new Door(5,false,true,false);
+		
+		Zombie fred = new Zombie();
 		
 		obsts.put(0, new Ice());
 		obsts.put(2, cabinDoor);
+		obsts.put(3, closetDoor);
+		obsts.put(4, fred);
 		
 		io.println("You wake in cold water, under a sheet of ice...");
 		io.println("You should probably try breaking out of the ice before you drown!");
@@ -34,7 +38,8 @@ public class Binnesota extends Location {
 		this.descs.put(1, "It is cold. You see a cabin in the distance");
 		this.descs.put(2,
 				"You are in front of a cabin. \n It has a heavy wooden door. It is in front of a frozen lake.");
-		this.descs.put(3,"You are inside of a cabin. There is a small door in the back.");
+		this.descs.put(3,"You are inside of a cabin. There is a small closet door in the back.");
+		this.descs.put(4,"You are inside a sort of tunnel. It leads to a forest");
 
 		this.targets.put("lake", 1);
 
@@ -43,12 +48,22 @@ public class Binnesota extends Location {
 
 		this.targets.put("door", 3);
 		this.targets.put("inside", 3);
+		
+		this.targets.put("hall", 4);
+		this.targets.put("closet",4);
 
 		cabinItems.add(new Bike(false));
 		cabinItems.add(cabinDoor);
+		
+		insideItems.add(closetDoor);
+		insideItems.add(new TrigBook());
+		
+		closetItems.add(fred);
 
 		lItems.put(1, getItems());
 		lItems.put(2, cabinItems);
+		lItems.put(3, insideItems);
+		lItems.put(4,closetItems);
 
 		// TODO: add locations and items.
 	}
@@ -84,9 +99,19 @@ public class Binnesota extends Location {
 		}
 		catch (Exception e) {
 			
-			e.printStackTrace();
+			//e.printStackTrace();
 			return true;
 		}
+	}
+	
+	public boolean containsMonster() {
+		List<Item> list = getItems();
+		for (Item i : list) {
+			if (i instanceof Zombie) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
@@ -101,12 +126,28 @@ public class Binnesota extends Location {
 					case "in":
 						if (checkDoorPassable()) {
 							level = targets.get(target);
-
-							return new Response("Moved to "+target, 1);
+							String m = "";
+							if (containsMonster()) {
+								m = "\nThere is a monster!";
+							}
+							return new Response("Moved to "+target+m, 1);
 						}
 						else {
 							return new Response("A door blocks your way", 0);
 						}
+					case "closet":
+						if (checkDoorPassable()) {
+							level = targets.get(target);
+							String m = "";
+							if (containsMonster()) {
+								m = "\nThere is a monster!";
+							}
+							return new Response("Moved to "+target+m, 1);
+						}
+						else {
+							return new Response("A door blocks your way", 0);
+						}
+						
 				default:
 					level = targets.get(target);
 					return new Response("Moved to " + target, 1);
@@ -130,6 +171,8 @@ public class Binnesota extends Location {
 			level ++;
 			return reps;
 		case 2:
+			return getCurObst().attack(damage);
+		case 4:
 			return getCurObst().attack(damage);
 		
 		}

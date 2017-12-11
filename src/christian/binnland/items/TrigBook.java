@@ -1,11 +1,22 @@
 package christian.binnland.items;
 
+import christian.binnland.Response;
+
 public class TrigBook extends Item {
-	public boolean grabable = true;
-	public int DAMAGE;
+
+	
+	public TrigBook(){
+		this.grabable=true;
+		this.DAMAGE = 3;
+	}
 	
 	public String getName() {
-		return "default_name";
+		
+		return "Textbook";
 	};
+	
+	public Response read() {
+		return new Response("You read the book.\nYou now know trigonometry and how to ride a bike",1);
+	}
 	
 }

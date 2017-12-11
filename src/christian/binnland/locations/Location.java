@@ -10,7 +10,6 @@ import christian.binnland.items.Fightable;
 import christian.binnland.items.Item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Location {

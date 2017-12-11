@@ -1,7 +1,6 @@
 package christian.binnland.items;
 
 import christian.binnland.Response;
-import christian.binnland.items.Item.Types;
 
 public class Door extends Item implements Fightable {
 	public static String INFO = "A big thingin uour path";

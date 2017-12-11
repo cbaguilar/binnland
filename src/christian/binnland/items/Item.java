@@ -10,9 +10,10 @@ public class Item {
 	
 	public boolean grabable = true;
 	public int DAMAGE;
-	
+    public int health;
+    
 	public String getName() {
-		return "default_name";
+		return "";
 	};
 	
 }
