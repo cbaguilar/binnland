@@ -43,6 +43,11 @@ public class IO {
 		ACTS.put("hit", 1);
 		ACTS.put("smash", 1);
 		ACTS.put("punch", 1);
+		ACTS.put("obliterate", 1);
+		ACTS.put("squeeze", 1);
+		ACTS.put("demolish", 1);
+		ACTS.put("stonecoldstunner", 1);
+		ACTS.put("dropkick", 1);
 
 		ACTS.put("pick", 2); // Pick up item commands
 		ACTS.put("take", 2);

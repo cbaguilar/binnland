@@ -127,7 +127,7 @@ public class Binnesota extends Location {
 					case "inside":
 					case "in":
 						if (checkDoorPassable()) {
-							level = targets.get(target);
+							level ++;
 							String m = "";
 							if (containsMonster()) {
 								m = "\nThere is a monster!";
