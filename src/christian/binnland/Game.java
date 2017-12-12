@@ -95,14 +95,25 @@ class Game {
 		println("It seems to you that an ice age is probably going to kill everyone in Binnesota");
 		if (question("Would you like to try to [e]scape or [s]urvive here?", "e", "s")) {
 			escape();
-			println("You can now survive in the binland empire!");
-			survive("Binland Empire");
+			clr();
+			println("You feel a need to go south!");
+	
 		} else {
-			println("That'll sure be tough..");
-			survive("Binnesota");
-
+			println("That'll sure be tough. Try surviving!");
+			survive("Binnesota",15);
+			clr();
+			println("You hear a screeching sound!");
+			pause();
+			println("The wind blows harder! You have to go south before you freeze!");
 		}
-	};
+
+			println("The trip will take 20 days...");
+			pause();
+			survive("on the road South",20);
+			println("Congradulations! You made it! Now you are emporer!");
+	}
+	
+	
 	
 	static boolean rand(int bound) {
 		Random rad = new Random();
@@ -140,7 +151,7 @@ class Game {
 				
 			}
 			else {
-				if ((weaponLevel*5)/(day*Math.random())>1) {
+				if ((weaponLevel*5)/(day*Math.random())>2) {
 					println("You got a critter! ");
 					int crit = (new Random().nextInt(5)+1);
 					println("You have "+crit+"bits of meat.");
@@ -149,7 +160,8 @@ class Game {
 					
 				}
 				else {
-					println("You missed...");
+					println("You missed...and stubbed your toe!");
+					player.takeDamage(1);
 					pause();
 					return 0;
 				}
@@ -168,9 +180,10 @@ class Game {
 	
 	int money = 0;
 	static int day = 0;
-	static void survive(String location) {
+	static void survive(String location,int days) {
+		day = 0;
 		int food = 0;
-		while (!dead) {
+		while (!dead&&day >=days) {
 			food = 0;
 			clr();
 			println(location+" survival day "+day);
@@ -202,6 +215,35 @@ class Game {
 			}
 			practice();
 			pause();
+			
+			if (new Random().nextInt(3)==2) {
+				clr();
+				println("A zombie art-major polar bear has arrived!");
+				println("He challenges you to a challenge.");
+				if (question("Would you like to challenge him to a game of [l]uck or [w]its?","l","w")) {
+					println("The bear pulls out a revolver...");
+					pause();
+					println("Grrrrr, Brsbrr. ghrrr!");
+					pause();
+					println("[Zees wepohn haz zeeks jambers but ongly wan boolet]");
+					pause();
+					if (roulette()) {
+						player.takeDamage(100000);
+						println("A crack! And you feel the pain!");
+					}
+					else {
+						println("*click*");
+						pause();
+						println("You survived!");
+					}
+				}
+				else {
+					if (wits()) {println("smart one!");  }
+					else {println("You get hurt!") ;  
+					player.takeDamage(50);}
+				}
+			}
+			
 			if (day%10 ==0) {
 				println("It's market day!");
 				println("You have "+food+ " food units that you can sell.");
