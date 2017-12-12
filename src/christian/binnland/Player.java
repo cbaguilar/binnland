@@ -87,7 +87,7 @@ public class Player {
 		return "Your attack power: "+pwr;
 	}
 	
-	private void takeDamage(int dam) {
+	void takeDamage(int dam) {
 		this.health-=dam;
 		
 	}
@@ -140,6 +140,11 @@ public class Player {
 			return "Could not find a door";
 		}
 	
+	}
+
+	public int getHealth() {
+		// TODO Auto-generated method stub
+		return health;
 	}
 	
 }

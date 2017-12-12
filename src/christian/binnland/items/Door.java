@@ -34,7 +34,11 @@ public class Door extends Item implements Fightable {
 	}
 	
 	public Response open() {
-		if (!locked) {
+		if (health < 0) {
+			passable = true;
+			return new Response("The door is destroyed..",0);
+		}
+		if ((!locked)) {
 		passable = true;
 		return new Response("The door was opened",0);
 		}

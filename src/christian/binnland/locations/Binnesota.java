@@ -47,7 +47,8 @@ public class Binnesota extends Location {
 
 		this.targets.put("cabin", 2);
 		this.targets.put("house", 2);
-
+		
+		this.targets.put("in", 3);
 		this.targets.put("door", 3);
 		this.targets.put("inside", 3);
 		

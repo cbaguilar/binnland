@@ -11,16 +11,16 @@ import christian.binnland.locations.*;
 class Game {
 
 	static Scanner sn = new Scanner(System.in);
+	
+	static Player player = new Player("Binns", 100);
 
 	public static void main(String[] args) {
-		stupidGame();
-		Player player = new Player("Binns", 100);
+		//stupidGame();
 		IO io = new IO(player);
 
 		println("You hear but you do not see yet.");
 		println("Say something!");
 		inputCommand();
-		Axe a = new Axe();
 
 		Binnesota binny = new Binnesota("Binnesota", io);
 		player.goTo(binny);
@@ -30,6 +30,7 @@ class Game {
 
 		}
 		stupidGame();
+		println("You are probably dead");
 
 	}
 
@@ -94,19 +95,144 @@ class Game {
 		println("It seems to you that an ice age is probably going to kill everyone in Binnesota");
 		if (question("Would you like to try to [e]scape or [s]urvive here?", "e", "s")) {
 			escape();
+			println("You can now survive in the binland empire!");
+			survive("Binland Empire");
 		} else {
 			println("That'll sure be tough..");
-			println("You need to first pick something to eat");
-			if (question("Would you like to eat some [s]now or your [t]extbook?", "s", "t")) {
-				println("It's a bit chilly, but satisfying nonetheless!");
-			} else {
-				println("You now have the power of trigonometry!");
-				trig = true;
-				println("With the pwoer of trigonometry, you can more easily survive!");
-			}
+			survive("Binnesota");
 
 		}
 	};
+	
+	static boolean rand(int bound) {
+		Random rad = new Random();
+		return (rad.nextInt(bound)==0);
+	}
+	
+	
+	
+	static int hunt() {
+		clr();
+		println("You go into the woods on your bike...");
+		pause();
+		if (!rand(4)) {
+			println("You see a critter! Tasty!");
+			println("Will you try catching up with it and [t]ackling\t(dangerous, requires bike skill)");
+			println("Or will you try thr[o]wing a weapon at it\t(requires weapon skill)");
+			if (question("","t","o")) {
+				double skillLevel = ((double)day/2)/bikeSkill;
+				println(skillLevel);
+				double fail = Math.random()*3;
+				println(fail*skillLevel);
+				if ((fail*skillLevel) < 1) {
+					println("You fell!");
+					int dam = new Random().nextInt(10);
+					player.takeDamage(dam);
+					println("Your health went down to " +player.getHealth());
+					println("No meat for you!");
+					pause();
+				}
+				else {
+					println("You caught a critter!");
+					pause();
+					return new Random().nextInt(7)+3;
+				}
+				
+			}
+			else {
+				if ((weaponLevel*5)/(day*Math.random())>1) {
+					println("You got a critter! ");
+					int crit = (new Random().nextInt(5)+1);
+					println("You have "+crit+"bits of meat.");
+					pause();
+					return crit;
+					
+				}
+				else {
+					println("You missed...");
+					pause();
+					return 0;
+				}
+					
+				
+			
+			}
+		}
+		println("No critters were found today!");
+		pause();
+		return 0;
+		
+	}
+	
+	
+	
+	int money = 0;
+	static int day = 0;
+	static void survive(String location) {
+		int food = 0;
+		while (!dead) {
+			food = 0;
+			clr();
+			println(location+" survival day "+day);
+			pause();
+			switch (day) {
+				case 0:
+					println("You need to first pick something to eat");
+					if (question("Would you like to eat some [s]now or your [t]extbook?", "s", "t")) {
+						println("It's a bit chilly, but satisfying nonetheless!");
+					} else {
+						println("You now have the power of trigonometry!");
+						trig = true;
+						weaponLevel +=2;
+						println("With the power of trigonometry, you can more easily survive!");
+						println("Your weapon level increased!");
+					}
+					pause();
+					break;
+				default:
+					
+					if (question("Will you food source for today be [h]unting, or [f]oraging?","h","f")) {
+						food +=hunt();
+					}
+					else {
+						int ber = new Random().nextInt(2);
+						println("You find "+ber+" nuts and berries..");
+						food += ber;
+					}
+			}
+			practice();
+			pause();
+			if (day%10 ==0) {
+				println("It's market day!");
+				println("You have "+food+ " food units that you can sell.");
+				println("Would you like to [b]uy a new throwing weapon? (Costs 3 food)");
+				println("Or would you like to [p]ass?");
+				if(question("","b","p")&& (food > 2)) {
+					food -=3;
+					weaponLevel++;
+					println("Your weapon level is now "+ weaponLevel);
+				}
+				else {
+					if (food < 3) {
+						println("You don't have enough food to sell!");
+					}
+				}
+			}
+			if (food-2< 0) {
+				println("You go home hungry today..");}
+			player.takeDamage(-(food-2));
+			println("Your health is now "+player.getHealth());
+			day++;
+			pause();
+			if (player.getHealth() < 0) {
+				dead = true;
+			}
+			
+
+			
+		}
+
+	}
 
 	static boolean dead = false;
 
@@ -115,6 +241,7 @@ class Game {
 		println("You see a bike, but you don't know how to ride it...");
 		if (question("Would you like to learn via [t]rial and error, or from a [m]aster?", "t", "m")) {
 			trial();
+			master();
 		} else {
 			master();
 		}
@@ -129,6 +256,35 @@ class Game {
 	static String y = "y";
 	static String n = "n";
 
+	static double weaponLevel = 3;
+	
+	private static void practice() {
+		println("You are going to practice your bike skills...");
+		if (!question("Are you sure you don't wanna back out? [y/n]", "y", "n")) {
+			return;
+		} else {
+			println("Sounds good. You try to ride...");
+			while (true) {
+				if (Math.random() < 0.4) {
+					player.takeDamage(new Random().nextInt(30));
+					println("You slipped and hurt yourself!");
+					println("Your health is now "+player.getHealth());
+					if (player.getHealth() < 0) { dead = true; }
+					return;
+				}
+				else {
+					bikeSkill += Math.random()*2;
+					println("You manage not to die! Your bike skill increases to "+bikeSkill);
+				}
+				if (!question("Would you like to keep practicing? [y/n]","y","n")) {
+					return;
+				}
+
+			}
+
+		}
+	}
+	
 	private static void trial() {
 		println("There is a good chance that you may die...");
 		if (!question("Are you sure you don't wanna back out? [y/n]", "y", "n")) {
@@ -147,8 +303,7 @@ class Game {
 					println("You manage not to die! Your bike skill increases to "+bikeSkill);
 				}
 				if (!question("Would you like to keep practicing? [y/n]","y","n")) {
-					master();
-					break;
+					return;
 				}
 
 			}
@@ -233,6 +388,11 @@ class Game {
 			return true;
 		};
 		return false;
+	}
+	
+	private static void buildShelter() {
+		clr();
+
 	}
 	
 	private static void master() {

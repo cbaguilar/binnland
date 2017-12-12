@@ -31,6 +31,7 @@ public class IO {
 		MODS.add("with");
 		MODS.add("up");
 		MODS.add("a");
+		MODS.add("the");
 
 		ACTS = new HashMap<String, Integer>();
 
@@ -68,6 +69,7 @@ public class IO {
 		ACTS.put("stats", 6);
 		
 		ACTS.put("help", 7);
+		ACTS.put("kms", 69);
 		ACTS.put("?",7);
 		
 	}
@@ -79,6 +81,8 @@ public class IO {
 	public List<String> inputCommand() {
 		return Arrays.asList(sn.nextLine().split(" "));
 	}
+	
+	static boolean trig = false;
 
 	/**
 	 * Pass an object to be printed via System.out
@@ -151,11 +155,17 @@ public class IO {
 			case 4:
 				return player.openDoor();
 			case 5:
+				if (cleanCmd.size() > 1) {
 				return player.equipItem(cleanCmd.get(1));
+				}
 			case 6:
 				return player.stats();
 			case 7:
 				return getCommands();
+			case 69:
+				return 	  "You have so much to live for!\n"
+						+ "Call 1-800-273-8255 for help if\n"
+						+ "you are having suicidal thoughts.";
 			default:
 				return "What are you trying to say?";
 
