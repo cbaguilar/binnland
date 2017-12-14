@@ -95,6 +95,7 @@ class Game {
 		println("It seems to you that an ice age is probably going to kill everyone in Binnesota");
 		if (question("Would you like to try to [e]scape or [s]urvive here?", "e", "s")) {
 			escape();
+			pause();
 			clr();
 			println("You feel a need to go south!");
 	
@@ -107,10 +108,12 @@ class Game {
 			println("The wind blows harder! You have to go south before you freeze!");
 		}
 
-			println("The trip will take 20 days...");
+			if (!dead) { println("The trip will take 20 days...");
 			pause();
 			survive("on the road South",20);
 			println("Congradulations! You made it! Now you are emporer!");
+
+			}
 	}
 	
 	
@@ -183,7 +186,7 @@ class Game {
 	static void survive(String location,int days) {
 		day = 0;
 		int food = 0;
-		while (!dead&&day >=days) {
+		while (!dead&&day <=days) {
 			food = 0;
 			clr();
 			println(location+" survival day "+day);
@@ -445,9 +448,14 @@ class Game {
 			println("Smart choice.");
 			println("Surprise! A bear greets you!");
 			if (question("Would you like to challenge the bear to a game of [l]uck or [w]its?","l","w")) {
-				println("Dunkaf! You are mauled to death!");
+				if (roulette()) {
 				dead = true;
 				return;
+				}
+				else {
+					println("You win, this time...");
+					pause();
+				}
 			}
 			else {
 				if (wits()) {

@@ -34,7 +34,7 @@ public class Binnesota extends Location {
 		obsts.put(4, fred);
 		
 		io.println("You wake in cold water, under a sheet of ice...");
-		io.println("You should probably try breaking out of the ice before you drown!");
+		io.println("You should probably try breaking out of the ice before you drown! \n [type in 'help' for a list of commands]");
 
 		this.descs.put(0, "It is cold and wet");
 		this.descs.put(1, "It is cold. You see a cabin in the distance");
